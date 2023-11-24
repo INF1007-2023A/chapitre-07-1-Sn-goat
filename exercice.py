@@ -12,27 +12,31 @@ def mass_volume_ellipsoide(a,b,c,mass_density):
 
 def DNA():
     def is_valid_sequences(chaine):
-        return chaine.isalnum() and (("A" or "T" or "G" or "C") in chaine.capitalize())
-
+        return chaine.isalpha() and not (False in [j in ["A", "T", "G", "C"] for j in set(i for i in chaine.upper())])
     def valid_sequences():
         while True:
             sequences = input("Enter a DNA sequences: ")
 
             if is_valid_sequences(sequences):
                 return sequences, len(sequences)
-            error = "The DNA sequeces is not valid\nTry again!"
-            print(error)
+            else:
+                print("The DNA sequeces is not valid.\nTry again!")
     
     def proportion_valide(validChaine, lenValidChaine):
         while True:
-            deux_elem = input("Enter a sequence of two DNA bases: ")
+            deux_elem = input("Entez a sequence of two DNA bases: ")
 
             if len(deux_elem) == 2:
-                nb  = validChaine.count(deux_elem)
-                proportion = round(((nb*2)/ lenValidChaine) * 100, 2)
-                return proportion, deux_elem
-            error = "The DNA sequeces is not made of only two bases\n Try again!"
-            print(error)
+                if is_valid_sequences(deux_elem):
+                    nb  = validChaine.count(deux_elem)
+                    proportion = round(((nb*2)/ lenValidChaine) * 100, 2)
+                    return proportion, deux_elem
+                else:
+                    print("The DNA sequeces is not valid.\nTry again!")
+            else:
+                print("The DNA sequeces is not made of only two bases.\nTry again!")
+           
+            
     
     chaîne, lenChaine = valid_sequences()
     porportion, deux_bases = proportion_valide(chaîne, lenChaine)
